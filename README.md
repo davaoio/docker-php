@@ -10,14 +10,18 @@
 
 ## Getting Started
 
+Get the environment running:
 ```
 docker-compose up --build
 ```
 
-Open a web browser to: http://localhost:5000
+Test the connection:
+```
+curl http://localhost:5000
+```
+(or open a web browser to: http://localhost:5000):
 
 Access MySQL:
-
 ```
 docker exec -it db mysql
 ```

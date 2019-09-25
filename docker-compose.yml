@@ -1,6 +1,7 @@
 version: '3'
 services:
   web:
+    container_name: web
     build: .
     depends_on:
       - db
@@ -9,11 +10,13 @@ services:
     environment:
       MYSQL_HOSTNAME: "db"
       MYSQL_USERNAME: "root"
-      MYSQL_PASSWORD: "root"
+      MYSQL_PASSWORD: ""
       MYSQL_DATABASE: "php"
-
+    volumes:
+      - "./src/:/var/www/html/"
   db:
+    container_name: db
     image: "mariadb:latest"
     environment:
-      MYSQL_ROOT_PASSWORD: "root"
+      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
       MYSQL_DATABASE: "php"

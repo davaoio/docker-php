@@ -1,0 +1,19 @@
+version: '3'
+services:
+  web:
+    build: .
+    depends_on:
+      - db
+    ports:
+      - "5000:80"
+    environment:
+      MYSQL_HOSTNAME: "db"
+      MYSQL_USERNAME: "root"
+      MYSQL_PASSWORD: "root"
+      MYSQL_DATABASE: "php"
+
+  db:
+    image: "mariadb:latest"
+    environment:
+      MYSQL_ROOT_PASSWORD: "root"
+      MYSQL_DATABASE: "php"

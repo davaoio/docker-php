@@ -11,7 +11,7 @@ function error_response($message)
     echo '<strong>Error:</strong> ' . $message;
 }
 
-function do_query($query, $connection)
+function do_query($connection, $query)
 {
     return mysqli_query($connection, $query);
 }
@@ -26,17 +26,17 @@ try {
     }
 
     // Check if user table exists, if not create.
-    if (do_query("SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = 'php-connect' AND TABLE_NAME = 'users'", $conn)->num_rows === 0) {
-        if (!do_query("CREATE TABLE `users` ( `id` INT UNSIGNED AUTO_INCREMENT PRIMARY KEY NOT NULL, `name` VARCHAR(255) NOT NULL, `ip_address` VARCHAR(255) NOT NULL);", $conn)) {
+    if (do_query($conn, "SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = 'php-connect' AND TABLE_NAME = 'users'")->num_rows === 0) {
+        if (!do_query($conn, "CREATE TABLE `users` ( `id` INT UNSIGNED AUTO_INCREMENT PRIMARY KEY NOT NULL, `name` VARCHAR(255) NOT NULL, `ip_address` VARCHAR(255) NOT NULL);")) {
             error_response("Can't create users table.");
         }
     }
 
     $ip = isset($_SERVER['HTTP_CLIENT_IP']) ? $_SERVER['HTTP_CLIENT_IP'] : isset($_SERVER['HTTP_X_FORWARDED_FOR']) ? $_SERVER['HTTP_X_FORWARDED_FOR'] : $_SERVER['REMOTE_ADDR'];
     // Insert row
-    do_query("INSERT INTO `users` (name, ip_address) VALUES ('steve', '$ip')", $conn);
+    do_query($conn, "INSERT INTO `users` (name, ip_address) VALUES ('steve', '$ip')");
 
-    $users = do_query("SELECT * FROM users", $conn);
+    $users = do_query($conn, "SELECT * FROM users");
 
     if ($users->num_rows > 0) {
         foreach ($users as $user)

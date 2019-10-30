@@ -1,12 +1,13 @@
 # Docker / PHP Demo
 
+This project is a simple container that demonstrates a Docker / PHP stack. It should allow people to get "something" up and running quickly.
+
 ## Tech Stack
 
 - Docker
 - docker-compose
 - PHP
 - MariaDB
-
 
 ## Getting Started
 
@@ -32,3 +33,8 @@ We start with the Docker image `php:7.3-apache`. This container source code can 
 https://github.com/docker-library/php/blob/5992cb02fa5b3d76baffad60d94052a805958553/7.3/buster/apache/Dockerfile
 
 `docker-compose` is only used for local development. It allows us to have a complete environment for testing. It links up the `src/` directory to `/var/www/html/` inside the container. So you just need to save your code and can refresh the browser to pick up the changes.
+
+## Future Ideas
+
+- `/` - Index endpoint - Return a simple "Hello world"
+- `/error` - Error endpoint - Return a 404 error and log to server

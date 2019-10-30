@@ -9,6 +9,7 @@ function error_response($message)
 {
     echo '<h2><strong>Oops, something went wrong!</strong><br></h2>';
     echo '<strong>Error:</strong> ' . $message;
+    error_log($message);
 }
 
 function do_query($connection, $query)
@@ -25,8 +26,8 @@ try {
         error_response($conn->connect_error);
     }
 
-    // Check if user table exists, if not create.
-    if (do_query($conn, "SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = 'php-connect' AND TABLE_NAME = 'users'")->num_rows === 0) {
+    // Check if user table exists, if not create
+    if (!do_query($conn, "SELECT 1 FROM users LIMIT 1")) {
         if (!do_query($conn, "CREATE TABLE `users` ( `id` INT UNSIGNED AUTO_INCREMENT PRIMARY KEY NOT NULL, `name` VARCHAR(255) NOT NULL, `ip_address` VARCHAR(255) NOT NULL);")) {
             error_response("Can't create users table.");
         }
